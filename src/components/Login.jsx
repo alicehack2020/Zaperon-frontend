@@ -3,6 +3,7 @@ import user from "../img/ic_user.svg"
 import companyIcon from "../img/zaperon_logo.png"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Cookies from 'js-cookie';
 import axios from "axios"
 import {
   TextField,
@@ -71,9 +72,8 @@ const Login = () => {
          position: toast.POSITION.TOP_LEFT
         });
           
-          localStorage.setItem("token",res.data.data.token);
+          Cookies.set('token', res.data.data.token, { expires: 7, path: '/' });
           localStorage.setItem("userName", res.data.data.name);
-          
           setTimeout(() => {
           setLoading(false)
           navigate('/')

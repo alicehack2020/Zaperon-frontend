@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios"
+import Cookies from 'js-cookie';
 
 const DashBoard = () => {
 
@@ -18,7 +19,7 @@ const DashBoard = () => {
 
   const checkUserLoginStatus = async() => {
     try {
-      const token = localStorage.getItem("token");
+      const token = Cookies.get("token");    
       if (token)
       {
         await axios.get('http://localhost:8080/auth/isLogin',
@@ -27,8 +28,8 @@ const DashBoard = () => {
           toast.success('Welcome', {
             position: toast.POSITION.BOTTOM_RIGHT
           });
-        localStorage.setItem("token",res.data.data.token);
-        localStorage.setItem("userName",res.data.data.name);
+          Cookies.set('token', res.data.data.token, { expires: 7, path: '/' });
+          localStorage.setItem("userName",res.data.data.name);
           navigate('/')
         })
         .catch((error) => {
@@ -67,10 +68,32 @@ const DashBoard = () => {
 
 
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem('userName');
-    navigate('/login') 
+  const logout = async () => {
+    try {
+    await axios.get('http://localhost:8080/auth/logout')
+      .then((res) => {
+      
+      toast.success(res.data.message, {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
+      Cookies.remove('token');
+      localStorage.removeItem('userName');
+      navigate('/login') 
+    })
+    .catch((error) => {
+      toast.error('Logout successful', {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
+
+      setTimeout(() => {
+        navigate('/login')
+      },1000)
+ })
+    
+    } catch (error) {
+      
+    }
+    
   }
 
   return (<>
