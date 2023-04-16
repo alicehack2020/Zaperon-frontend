@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'js-cookie';
 import axios from "axios"
+import { url } from '../constants/constants';
 import {
   TextField,
   Button,
@@ -67,7 +68,7 @@ const Login = () => {
       }
      
       setLoading(true);
-      await axios.post( 'http://localhost:8080/auth/login', data).then((res) => {
+      await axios.post( `${url}/auth/login`, data).then((res) => {
         toast.success(res.data.message, {
          position: toast.POSITION.TOP_LEFT
         });
@@ -115,7 +116,7 @@ const Login = () => {
 
 
         <Grid item xs={3} style={{ margin: '10px' }}>
-              <center>
+            <center>
             <Box
                 component="img"
                 sx={{
@@ -131,10 +132,7 @@ const Login = () => {
                 src={user}
                   
                 />
-                
-                </center>
-            
-                    
+                </center>  
             <ToastContainer /> 
             <Typography style={{color:'#0B3558',fontWeight:'bold',fontSize:'3rem'}} align='center'>Welcome!</Typography>     
             <Typography style={{color:'#0B3558'}} align='center'>Let's connect to your workspace.</Typography>     
@@ -208,26 +206,26 @@ const Login = () => {
           </form>
           
         
-      </Grid>   
+        </Grid>   
      
       </Grid>
       <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-around',margin:'10px' }}>
         
-        <Stack direction="row" sx={{alignItems:'center'}}>
-          <Typography style={{ color: '#96A2AD' }}>Powered by</Typography> 
-          <Box
-                component="img"
-                sx={{
-                  height: 233,
-                  width: 350,
-                  padding:'30px',
-                  maxHeight:'23px',
-                  maxWidth: '100px',
-                  }}
-                alt="The house from the offer."
-                src={companyIcon}
-                  
-                />
+      <Stack direction="row" sx={{alignItems:'center'}}>
+        <Typography style={{ color: '#96A2AD' }}>Powered by</Typography> 
+        <Box
+              component="img"
+              sx={{
+                height: 233,
+                width: 350,
+                padding:'30px',
+                maxHeight:'23px',
+                maxWidth: '100px',
+                }}
+              alt="The house from the offer."
+              src={companyIcon}
+                
+              />
           
 
         </Stack>
