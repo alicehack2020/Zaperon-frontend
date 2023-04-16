@@ -9,12 +9,11 @@ import {
   CircularProgress,
   Typography,
   Box,
-  Container,
   Grid,
-  Avatar,
   Stack,
 } from '@mui/material';
-import { Image, Visibility, VisibilityOff } from '@mui/icons-material';
+import {Visibility, VisibilityOff } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 const App = () => {
   const [email, setEmail] = useState('');
@@ -23,7 +22,7 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-
+ const navigate=useNavigate()
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     setEmailError('');
@@ -56,10 +55,11 @@ const App = () => {
     }
     setLoading(true);
     // Simulating an API call
-    setTimeout(() => {
-      setLoading(false);
-      // Handle successful login here
-    }, 2000);
+    // setTimeout(() => {
+    //   setLoading(false);
+    //   // Handle successful login here
+    // }, 2000);
+    navigate('/dashboard')
   };
 
   return (
@@ -170,6 +170,8 @@ const App = () => {
           
         
       </Grid>   
+     
+      </Grid>
       <Stack direction="row" sx={{ alignItems: 'center', justifyContent: 'space-around',margin:'10px' }}>
         
         <Stack direction="row" sx={{alignItems:'center'}}>
@@ -197,7 +199,6 @@ const App = () => {
         </Stack>
 
       </Stack>
-      </Grid>
      
     </>
     
